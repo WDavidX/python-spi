@@ -31,5 +31,14 @@ A pure Python SPI interface using the Linux spidev device
     spi.write([0x12, 0x34, 0xAB, 0xCD])
     received = spi.read(10)
 
+## Features
 
+- Pure Python implementation. No C module to compile.
+- Supports half-duplex reads and writes as well as full-duplex transfers.
+- Exposes all available spidev interface options as properties.
+
+## Installation
+
+.. code-block:: bash
+    $ sudo python setup.py install
 
