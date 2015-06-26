@@ -363,7 +363,7 @@ class SPI(object):
         self._set_mode(mode)
 
     def write(self, data, speed=0, bits_per_word=0, delay=0):
-        """Perform half-duplex SPI write.
+        """Perform half-duplex SPI write
 
         Args:
             data: List of words to write
@@ -407,7 +407,7 @@ class SPI(object):
         return [ord(byte) for byte in ctypes.string_at(receive_buffer, length)]
 
     def transfer(self, data, speed=0, bits_per_word=0, delay=0):
-        """Perform full-duplex SPI transfer
+        """Perform full-duplex SPI transfer, i.e. both read and write
 
         Args:
             data: List of words to transmit
@@ -421,7 +421,8 @@ class SPI(object):
         Returns:
             List of words read from SPI bus during transfer
         """
-        length = len(data)
+        data = array.array('B', data).tostring()
+        length = len(data)        
         transmit_buffer = ctypes.create_string_buffer(str(data))
         receive_buffer = ctypes.create_string_buffer(length)
         spi_ioc_transfer = struct.pack(SPI._IOC_TRANSFER_FORMAT,
@@ -430,4 +431,5 @@ class SPI(object):
                                        length, speed, delay, bits_per_word, 0,
                                        0, 0, 0)
         fcntl.ioctl(self.handle, SPI._IOC_MESSAGE, spi_ioc_transfer)
-        return [ord(byte) for byte in ctypes.string_at(receive_buffer, length)]
+        return [ord(byte) for byte in ctypes.string_at(receive_buffer, length)] 
+
