@@ -42,4 +42,5 @@ A pure Python SPI interface using the Linux spidev device
 .. code-block:: bash
 
     $ sudo python setup.py install
+    
 
